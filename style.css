@@ -7,7 +7,22 @@
 
 body {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  background-color: var(--clr-grey);
+}
+
+#header {
+  display: flex;
   justify-content: center;
+  width: 100%;
+  margin-bottom: 40px;
+  background-color: var(--clr-black);
+}
+
+h1 {
+  color: var(--clr-blue);
 }
 
 #calculator {
@@ -17,6 +32,8 @@ body {
   height: 300px;
   padding: 10px;
   background-color: var(--clr-black);
+  border: 3px solid black;
+  border-radius: 15px;
 }
 #display {
   text-align: end;
@@ -24,6 +41,8 @@ body {
   background-color: var(--clr-grey);
   margin-bottom: 10px;
   height: 50px;
+  border: 3px solid black;
+  border-radius: 15px;
 }
 #display > p {
   padding-right: 10px;
@@ -36,6 +55,14 @@ body {
   justify-content: center;
 }
 
+button {
+  border-radius: 15px;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
 .digit,
 .operator,
 .decimal,
@@ -44,6 +71,7 @@ body {
 .placeholder {
   width: 50px;
   height: 45px;
+  border: 3px solid black;
 }
 
 .digit,
@@ -56,6 +84,7 @@ body {
 .equal {
   background-color: var(--clr-white);
 }
+
 .placeholder {
   background-color: var(--clr-black);
   border: none;

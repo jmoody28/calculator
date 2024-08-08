@@ -6,7 +6,7 @@ const text = document.querySelector("#text");
 const clear = document.querySelector(".clear");
 const digits = document.querySelectorAll(".digit");
 const operators = document.querySelectorAll(".operator");
-const decimal = document.querySelectorAll(".decimal");
+const decimal = document.querySelector(".decimal");
 const equal = document.querySelector(".equal");
 
 digits.forEach((digit) =>
@@ -23,26 +23,43 @@ function getNumber(num) {
   }
 }
 
+decimal.addEventListener("click", function () {
+  if (!currentNum.includes(".")) {
+    currentNum += ".";
+    text.textContent = currentNum;
+    console.log(currentNum);
+  }
+});
+
 operators.forEach((op) =>
   op.addEventListener("click", function (o) {
     getOperator(o.target.value);
-    text.textContent = o.target.textContent;
   })
 );
 
 function getOperator(symbol) {
-  if (currentNum != "" && prevNum == "") {
-    prevNum = currentNum;
-    currentNum = "";
-    operator += symbol;
-    console.log(currentNum, prevNum, operator);
-  } else if (s) {
+  if (operator == "") {
+    if (currentNum != "" && prevNum == "") {
+      prevNum = currentNum;
+      currentNum = "";
+      operator += symbol;
+      console.log(currentNum, prevNum, operator);
+    }
+  } else {
+    if (prevNum != "" && currentNum == "") {
+      operator = "";
+      operator += symbol;
+      console.log(currentNum, prevNum, operator);
+    } else if (currentNum != "" && prevNum != "") {
+      operate(prevNum, operator, currentNum);
+      operator = "";
+      prevNum = text.textContent;
+      currentNum = "";
+      operator += symbol;
+      console.log(currentNum, prevNum, operator);
+    }
   }
 }
-
-equal.addEventListener("click", function () {
-  operate(prevNum, operator, currentNum);
-});
 
 clear.addEventListener("click", function () {
   currentNum = "";
@@ -51,11 +68,24 @@ clear.addEventListener("click", function () {
   text.textContent = "0";
 });
 
+equal.addEventListener("click", function () {
+  operate(prevNum, operator, currentNum);
+});
+
 function operate(num1, op, num2) {
+  num1 = parseFloat(num1);
+  num2 = parseFloat(num2);
   if (op == "add") {
-    num1 = parseInt(num1);
-    num2 = parseInt(num2);
-    sum = num1 + num2;
+    let sum = num1 + num2;
     return (text.textContent = sum.toString());
+  } else if (op == "subtract") {
+    let difference = num1 - num2;
+    return (text.textContent = difference.toString());
+  } else if (op == "multiply") {
+    let product = num1 * num2;
+    return (text.textContent = product.toString());
+  } else if (op == "divide") {
+    let quotient = num1 / num2;
+    return (text.textContent = quotient.toString());
   }
 }
